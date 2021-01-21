@@ -130,3 +130,6 @@ dmypy.json
 
 # VScode
 .vscode/
+
+# Ignore private content
+consequences/content/private/

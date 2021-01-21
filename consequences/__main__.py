@@ -7,4 +7,5 @@ if __name__ == '__main__':
     # load files: left side content, right side output
     # populate buttons: left side new, right side load saved
     # generate
+    print("welcome to game")
     pass
