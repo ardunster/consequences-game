@@ -1,8 +1,8 @@
-def template_load():
+def content_load():
     pass
 
-def file_load():
+def output_load():
     pass
 
-def file_save():
+def output_save():
     pass

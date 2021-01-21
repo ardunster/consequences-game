@@ -1,6 +1,7 @@
-#!/usr/bin/env python3
+#!./venv/bin/env python3
 
-from consequences.common.common import template_load, file_load, file_save
+from consequences.common.common import content_load, output_load, output_save
+from consequences.gui.main_window import main_window
 
 if __name__ == '__main__':
     # Load welcome window
