@@ -9,12 +9,12 @@ classic style Consequences game.
 
 ## Requirements
 
-Built in Python 3.9.0, using PySide2.
+Built in Python 3.9.0, using PySide6.
 Uses:
 
 ``` pip
-PySide2==5.15.2
-shiboken2==5.15.2
+PySide6==6.0.0
+shiboken6==6.0.0
 ```
 
 ## Install
