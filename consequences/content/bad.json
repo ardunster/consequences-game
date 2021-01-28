@@ -1,0 +1,5 @@
+{
+    "title": "Template",
+    "somethingnotvalues": {"name1": "a name", "verb1": "verb", "adjective1": "adjective", "noun1": "noun", "noun_plural1": "plural noun"},
+    "text": "{name1} {verb1} to a/an {adjective1} {noun1} of {noun_plural1}."
+}

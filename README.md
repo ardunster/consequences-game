@@ -19,16 +19,32 @@ shiboken6==6.0.0
 
 ## Install
 
-Set up a python3 virtual environment and then install the requirements. On a
-Linux based system, use the following commands:
+The following commands assume that you have Python3.9 installed (although the
+game will probably run on earlier versions of Python3 as well) and running from
+your command line, and that you have cloned the repository into a folder called
+`consequences-game`.
+
+Set up a python3 virtual environment and then install the requirements:
+
+On a Linux based system, use the following commands:
 
 ``` bash
 consequences-game $ python3.9 -m venv venv
 consequences-game $ venv/bin/pip install --upgrade pip
 consequences-game % venv/bin/pip install -r requirements.txt
+# Then run the game:
+consequences-game % venv/bin/python3 -m consequences
 ```
 
-You can then run the game using the command `venv/bin/python3 -m consequences`
+On Windows, the commands are fairly similar:
+
+``` cmd
+\consequences-game> python -m venv venv
+\consequences-game> venv\scripts\python.exe -m pip install --upgrade pip
+\consequences-game> venv\scripts\python.exe -m pip install -r requirements.txt
+# Then run the game:
+\consequences-game> venv\scripts\python.exe -m consequences
+```
 
 ## Content
 

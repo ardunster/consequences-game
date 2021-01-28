@@ -1,6 +1,6 @@
 #!./venv/bin/env python3
 
-from consequences.common.files_load import content_load, output_load, output_save
+# from consequences.common.files_load import content_load, output_load, output_save
 from consequences.gui.main_window import open_window
 
 if __name__ == '__main__':

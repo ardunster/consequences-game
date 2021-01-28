@@ -2,16 +2,36 @@ import json
 import pathlib
 
 
-def content_load():
+def content_load(filepath):
+    '''
+    Loads content data from a given json file.
+    Input: the Path to the specified file.
+    '''
+    with(filepath.open()) as file:
+        data = file.read()
+    content = json.loads(data)
+    # Verify that loaded file contains all required fields to generate content.
+    valid = (('title' in content.keys()) and
+             ('values' in content.keys()) and
+             ('text' in content.keys()))
+    if not valid:
+        return "Invalid input"
+        # TODO: Throw an error
+    else:
+        return content
+
+
+def output_save(generated_dictionary):
+    '''
+    Saves user generated output into a re-loadable json output file.
+    Filename generated from content title plus timestamp, contents of file
+    include content title, timestamp, and the generated output.
+    '''
+    # if doesn't exist, create directory output
     pass
 
 
 def output_load():
-    pass
-
-
-def output_save():
-    # if doesn't exist, create directory output
     pass
 
 
@@ -67,8 +87,12 @@ def directory_load(in_directory):
 if __name__ == "__main__":
     print("Test the functionality of the load functions:")
 
-    print(directory_load('content').items())
-    print(directory_load('output').items())
+    # print(directory_load('content').items())
+    # print(directory_load('output').items())
 
-    # print(content_load())
+    contentpath = pathlib.Path() / 'consequences' / 'content' / 'template.json'
+    print(content_load(contentpath))
+
+    badpath = pathlib.Path() / 'consequences' / 'content' / 'bad.json'
+    print(content_load(badpath))
     # print(output_load())
