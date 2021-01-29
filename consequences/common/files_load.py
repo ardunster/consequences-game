@@ -6,6 +6,7 @@ def content_load(filepath):
     '''
     Loads content data from a given json file.
     Input: the Path to the specified file.
+    Return: Content in dictionary format
     '''
     with(filepath.open()) as file:
         data = file.read()

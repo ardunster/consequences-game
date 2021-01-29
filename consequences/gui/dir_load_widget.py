@@ -68,6 +68,9 @@ class ListBox(QtWidgets.QWidget):
 
 def content_func(input):
     # temp text func for select button
+    # can this be assigned in main_window.py? Since it has to change the load
+    # widget to the gameplay widget from there. And needs to return to the load
+    # widget after saving content.
     if input == "":
         print("Please select a list item.")
     else:
