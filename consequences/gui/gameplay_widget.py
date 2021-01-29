@@ -21,6 +21,7 @@ class gameplayWidget(QtWidgets.QWidget):
             line_edit_widget = QtWidgets.QLineEdit(v)
             self.form_layout.addRow(label_widget, line_edit_widget)
             self.edit_list.append((label_widget, line_edit_widget))
+        self.edit_list.append((QtWidgets.QLabel("Made by:"), QtWidgets.QLineEdit("")))
 
         # Lay out the buttons
         self.cancel_button = QtWidgets.QPushButton("&Cancel")

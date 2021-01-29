@@ -10,7 +10,7 @@ def generate(input_dictionary):
     output['title'] = input_dictionary['title']
     output['text'] = input_dictionary['text'].format_map(input_dictionary["values"])
     # TODO: Get and save timestamp into dict
-    # output_save(output) # Ask in message box instead? 
+    # TODO: extract "Made By" field if not empty
     return output
 
 

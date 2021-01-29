@@ -29,6 +29,11 @@ def output_save(generated_dictionary):
     include content title, timestamp, and the generated output.
     '''
     # if doesn't exist, create directory output
+    # squash multi word titles (split and join?), remove characters that can't
+    # be in filenames, etc
+    # squash timestamp for filename
+    # concatenate title and timestamp to produce filename
+    # Save json output with title, timestamp, content.
     pass
 
 
