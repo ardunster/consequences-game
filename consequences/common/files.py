@@ -1,14 +1,15 @@
+import datetime
 import json
 import pathlib
 
 
-def content_load(filepath):
+def content_load(in_filename):
     """
     Loads content data from a given json file.
     Input: the Path to the specified file.
     Return: Content in dictionary format
     """
-    with (filepath.open()) as file:
+    with (in_filename.open()) as file:
         data = file.read()
     content = json.loads(data)
     # Verify that loaded file contains all required fields to generate content.
@@ -44,15 +45,25 @@ def output_save(generated_dictionary):
 
     filename += ".json"
 
-    generated_dictionary['time'] = generated_dictionary['time'].__str__()
+    generated_dictionary["time"] = generated_dictionary["time"].__str__()
 
     outputpath = output_directory / filename
     with open(outputpath, "w") as outfile:
         json.dump(generated_dictionary, outfile)
 
 
-def output_load():
-    pass
+def output_load(in_filename):
+    """
+    Loads previously generated and saved user output for display.
+    Input: File path to load
+    Output: Dictionary matching original output of generate()
+    """
+    with (in_filename.open()) as file:
+        data = file.read()
+    json_data = json.loads(data)
+    json_data['time'] = datetime.datetime.fromisoformat(json_data['time'])
+
+    return json_data
 
 
 def directory_load(in_directory):
@@ -90,9 +101,12 @@ def directory_load(in_directory):
             with (item.open()) as file:
                 data = file.read()
             json_data = json.loads(data)
-            # TODO: Verify 'title' exists, decide on handling if no 'title'
-            #       in the .json file. Skip? Error handling? use "untitled"?
-            if str(json_data["title"]) not in results:
+            if (
+                "title" not in str(json_data)
+                or "text" not in str(json_data)
+            ):
+                pass
+            elif str(json_data["title"]) not in results:
                 results[str(json_data["title"])] = item
             else:
                 results[str(json_data["title"]) + " " + str(i)] = item
@@ -107,12 +121,11 @@ def directory_load(in_directory):
 if __name__ == "__main__":
     print("Test the functionality of the load functions:")
 
-    # print(directory_load('content').items())
-    # print(directory_load('output').items())
+    print(directory_load('content').items())
+    print(directory_load('output').items())
 
     contentpath = pathlib.Path() / "consequences" / "content" / "template.json"
     print(content_load(contentpath))
 
     badpath = pathlib.Path() / "consequences" / "content" / "bad.json"
     print(content_load(badpath))
-    # print(output_load())

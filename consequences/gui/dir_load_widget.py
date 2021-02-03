@@ -24,7 +24,6 @@ class dirLoadWidget(QtWidgets.QWidget):
     @QtCore.Slot()
     def clicked_list_item(self):
         self.target = self.list.currentItem().data(1)
-        print(f"clicked a list item {self.target}")
 
 
 class ListBox(QtWidgets.QWidget):

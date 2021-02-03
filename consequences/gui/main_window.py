@@ -2,10 +2,12 @@ import sys
 from PySide6 import QtWidgets, QtCore
 
 from consequences.common.generate import generate
-from consequences.common.files import output_save
+from consequences.common.files import output_save, output_load
 from consequences.gui.dir_load_widget import loadWindow
 from consequences.gui.gameplay_widget import gameplayWidget
 from consequences.gui.output_display_widget import outputDisplay
+
+# TODO: Implement a popup box for the "please select a list item" spots
 
 
 class mainWindow(QtWidgets.QWidget):
@@ -34,7 +36,6 @@ class mainWindow(QtWidgets.QWidget):
         is not preloaded.
         """
         contentpath = list(self.load.content.content_list.contents.items())[0][1]
-        print(contentpath)
         self.game = gameplayWidget(contentpath)
 
     def setup_gameplay(self, input_path):
@@ -47,18 +48,30 @@ class mainWindow(QtWidgets.QWidget):
 
     @QtCore.Slot()
     def select_content(self):
-        self.content_func(self.load.content.content_list.target)
-
-    @QtCore.Slot()
-    def select_output(self):
-        self.content_func(self.load.output.content_list.target)
-
-    def content_func(self, input_path):
-        if input_path == "" or input == "Error":
+        input_path = self.load.content.content_list.target
+        if input_path == "" or input_path == "Error":
             print("Please select a list item.")
         else:
             self.setup_gameplay(input_path)
             print(f"Story Select: {input_path}")
+
+    @QtCore.Slot()
+    def select_output(self):
+        input_path = self.load.output.content_list.target
+        if input_path == "" or input_path == "Error":
+            print("Please select a list item.")
+            return
+        else:
+            loaded = output_load(input_path)
+            output_display = outputDisplay(loaded, True)
+            print(f"Story Select: {input_path}")
+        ret = output_display.exec_()
+        if ret == QtWidgets.QMessageBox.Save:
+            pass
+        elif ret == QtWidgets.QMessageBox.AcceptRole:
+            self.cancel()
+        else:
+            pass
 
     @QtCore.Slot()
     def cancel(self):
@@ -76,14 +89,12 @@ class mainWindow(QtWidgets.QWidget):
         output_display = outputDisplay(generated)
         ret = output_display.exec_()
         if ret == QtWidgets.QMessageBox.Save:
+            print("Saving...")
             output_save(generated)
-            print("Save clicked")
         elif ret == QtWidgets.QMessageBox.AcceptRole:
             self.cancel()
-            print("Return clicked")
         else:
-            # Error throw?
-            print("Something else clicked (?????)")
+            pass
 
 
 def open_window():

@@ -51,5 +51,6 @@ only things visible to the player!
 
 It's recommended to *copy* the template before modifying it when creating a new
 file. Keep in mind if you make any mistakes in constructing your template file,
-the program may not load at all, so if you have any problems with the program
-loading after creating new content double check your template first!
+your template file may not appear, or the program may not even load at all, so
+if you have any problems with the program loading after creating new content
+double check your template first!
