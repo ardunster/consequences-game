@@ -48,6 +48,8 @@ On Windows, the commands are fairly similar:
 
 ## Content
 
-To create user content, copy the template file in the `/content/` directory. If
-you want to create content not tracked by git, the `.gitignore` file is set up
-to ignore a `/private/` directory inside content.
+To create user content, copy the template file in the `/content/` directory.
+More details on implementation are in the README.md in that directory.
+
+If you want to create content not tracked by git, the `.gitignore` file is set
+up to ignore a `/private/` directory inside content.
