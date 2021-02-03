@@ -3,18 +3,20 @@ import pathlib
 
 
 def content_load(filepath):
-    '''
+    """
     Loads content data from a given json file.
     Input: the Path to the specified file.
     Return: Content in dictionary format
-    '''
-    with(filepath.open()) as file:
+    """
+    with (filepath.open()) as file:
         data = file.read()
     content = json.loads(data)
     # Verify that loaded file contains all required fields to generate content.
-    valid = (('title' in content.keys()) and
-             ('values' in content.keys()) and
-             ('text' in content.keys()))
+    valid = (
+        ("title" in content.keys())
+        and ("values" in content.keys())
+        and ("text" in content.keys())
+    )
     if not valid:
         return "Invalid input"
         # TODO: Throw an error
@@ -23,18 +25,30 @@ def content_load(filepath):
 
 
 def output_save(generated_dictionary):
-    '''
+    """
     Saves user generated output into a re-loadable json output file.
     Filename generated from content title plus timestamp, contents of file
     include content title, timestamp, and the generated output.
-    '''
-    # if doesn't exist, create directory output
-    # squash multi word titles (split and join?), remove characters that can't
-    # be in filenames, etc
-    # squash timestamp for filename
-    # concatenate title and timestamp to produce filename
-    # Save json output with title, timestamp, content.
-    pass
+    """
+    output_directory = pathlib.Path.cwd() / "consequences" / "output"
+
+    # Remove spaces and invalid file path characters, convert to lower case
+    # for filename consistency
+    invalid_chars = '<>:"\\/|?* '
+    filename = "".join(
+        c for c in generated_dictionary["title"] if c not in invalid_chars
+    ).lower()
+
+    # Add datetime
+    filename += "-" + generated_dictionary["time"].strftime("%Y%m%d-%H%M")
+
+    filename += ".json"
+
+    generated_dictionary['time'] = generated_dictionary['time'].__str__()
+
+    outputpath = output_directory / filename
+    with open(outputpath, "w") as outfile:
+        json.dump(generated_dictionary, outfile)
 
 
 def output_load():
@@ -42,25 +56,25 @@ def output_load():
 
 
 def directory_load(in_directory):
-    '''
+    """
     Loads .json files in the specified directory.
     Input: the directory inside /consequences/ to search
     Return: a dictionary of {"json title field": "filename"}
-    '''
+    """
     # Set up function variables
     filenames = []
     results = dict()
 
     # Sets the input directory to the relevant subdirectory inside
     # the consequences/ folder.
-    directory = (pathlib.Path.cwd() / 'consequences' / in_directory)
+    directory = pathlib.Path.cwd() / "consequences" / in_directory
 
     # Gets the filenames of any .json files in the specified directory
     # and any subdirectories.
     def get_filenames(directory):
         result = []
         if directory.exists():
-            for item in directory.rglob('*.json'):
+            for item in directory.rglob("*.json"):
                 result.append(item)
         return result
 
@@ -73,15 +87,15 @@ def directory_load(in_directory):
     if filenames:
         i = 2
         for item in filenames:
-            with(item.open()) as file:
+            with (item.open()) as file:
                 data = file.read()
             json_data = json.loads(data)
             # TODO: Verify 'title' exists, decide on handling if no 'title'
             #       in the .json file. Skip? Error handling? use "untitled"?
-            if str(json_data['title']) not in results:
-                results[str(json_data['title'])] = item
+            if str(json_data["title"]) not in results:
+                results[str(json_data["title"])] = item
             else:
-                results[str(json_data['title']) + " " + str(i)] = item
+                results[str(json_data["title"]) + " " + str(i)] = item
                 i += 1
     else:
         # TODO: implement error and appropriate handling in interface.
@@ -96,9 +110,9 @@ if __name__ == "__main__":
     # print(directory_load('content').items())
     # print(directory_load('output').items())
 
-    contentpath = pathlib.Path() / 'consequences' / 'content' / 'template.json'
+    contentpath = pathlib.Path() / "consequences" / "content" / "template.json"
     print(content_load(contentpath))
 
-    badpath = pathlib.Path() / 'consequences' / 'content' / 'bad.json'
+    badpath = pathlib.Path() / "consequences" / "content" / "bad.json"
     print(content_load(badpath))
     # print(output_load())

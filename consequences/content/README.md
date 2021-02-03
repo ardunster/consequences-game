@@ -46,3 +46,10 @@ after the last value.
 
 Keep in mind, while playing the session, the title and the values will be the
 only things visible to the player!
+
+## Note
+
+It's recommended to *copy* the template before modifying it when creating a new
+file. Keep in mind if you make any mistakes in constructing your template file,
+the program may not load at all, so if you have any problems with the program
+loading after creating new content double check your template first!

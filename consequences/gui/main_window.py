@@ -2,6 +2,7 @@ import sys
 from PySide6 import QtWidgets, QtCore
 
 from consequences.common.generate import generate
+from consequences.common.files import output_save
 from consequences.gui.dir_load_widget import loadWindow
 from consequences.gui.gameplay_widget import gameplayWidget
 from consequences.gui.output_display_widget import outputDisplay
@@ -75,7 +76,7 @@ class mainWindow(QtWidgets.QWidget):
         output_display = outputDisplay(generated)
         ret = output_display.exec_()
         if ret == QtWidgets.QMessageBox.Save:
-            # TODO: call save function with generated dict
+            output_save(generated)
             print("Save clicked")
         elif ret == QtWidgets.QMessageBox.AcceptRole:
             self.cancel()
