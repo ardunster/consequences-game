@@ -3,6 +3,8 @@
 # from consequences.common.files_load import content_load, output_load, output_save
 from consequences.gui.main_window import open_window
 
+
+
 if __name__ == '__main__':
     open_window()
     # Load welcome window

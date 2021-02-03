@@ -43,3 +43,6 @@ then the hint in quotes `"a noun"`. (If you choose not to put in a hint, you
 still need the quotes, or it won't work: for example: `"verb1": ""`) Then a
 comma and a space `, ` and then proceed with the next word. Don't add a comma
 after the last value.
+
+Keep in mind, while playing the session, the title and the values will be the
+only things visible to the player!

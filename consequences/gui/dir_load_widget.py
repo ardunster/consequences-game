@@ -1,6 +1,7 @@
 from PySide6 import QtCore, QtWidgets  # , QtGui
 
 from consequences.common.files_load import directory_load
+from consequences.gui.gameplay_widget import gameplayWidget
 
 
 class dirLoadWidget(QtWidgets.QWidget):
@@ -28,14 +29,14 @@ class dirLoadWidget(QtWidgets.QWidget):
 
 
 class ListBox(QtWidgets.QWidget):
-    def __init__(self, title, directory, button_text, select_func):
+    def __init__(self, title, directory, button_text):
         super().__init__()
 
         # Initialize variables
         self.title = title
         self.directory = directory
         self.button_text = button_text
-        self.select_func = select_func
+        # self.select_func = select_func
 
         # Build list label
         self.label = QtWidgets.QLabel(self.title,
@@ -59,23 +60,6 @@ class ListBox(QtWidgets.QWidget):
         self.layout.addWidget(self.story_select_button)
         self.setLayout(self.layout)
 
-        self.story_select_button.clicked.connect(self.select)
-
-    @QtCore.Slot()
-    def select(self):
-        self.select_func(self.content_list.target)
-
-
-def content_func(input):
-    # temp text func for select button
-    # can this be assigned in main_window.py? Since it has to change the load
-    # widget to the gameplay widget from there. And needs to return to the load
-    # widget after saving content.
-    if input == "":
-        print("Please select a list item.")
-    else:
-        print(f"Story Select: {input}")
-
 
 class loadWindow(QtWidgets.QWidget):
     def __init__(self):
@@ -83,12 +67,10 @@ class loadWindow(QtWidgets.QWidget):
 
         # Get directory contents
         self.content = ListBox("Available Stories",
-                               "content", "Start Selected Story",
-                               content_func)
+                               "content", "Start Selected Story")
         # content = ContentList()
         self.output = ListBox("Saved Stories",
-                              "output", "Read Saved Story",
-                              content_func)
+                              "output", "Read Saved Story")
 
         # Add to sub layout
         self.sub_layout = QtWidgets.QHBoxLayout()
