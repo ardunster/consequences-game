@@ -1,4 +1,4 @@
-from PySide6 import QtCore, QtWidgets  # , QtGui
+from PySide6 import QtCore, QtWidgets
 
 from consequences.common.files_load import directory_load
 from consequences.gui.gameplay_widget import gameplayWidget
@@ -36,7 +36,6 @@ class ListBox(QtWidgets.QWidget):
         self.title = title
         self.directory = directory
         self.button_text = button_text
-        # self.select_func = select_func
 
         # Build list label
         self.label = QtWidgets.QLabel(self.title,

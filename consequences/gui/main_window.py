@@ -2,8 +2,10 @@ import pathlib
 import sys
 from PySide6 import QtWidgets, QtCore
 
+from consequences.common.generate import generate
 from consequences.gui.dir_load_widget import loadWindow
 from consequences.gui.gameplay_widget import gameplayWidget
+from consequences.gui.output_display_widget import outputDisplay
 
 
 class mainWindow(QtWidgets.QWidget):
@@ -11,10 +13,11 @@ class mainWindow(QtWidgets.QWidget):
         super().__init__()
 
         self.load = loadWindow()
+        self.preload()
 
         self.stacked = QtWidgets.QStackedWidget()
         self.stacked.addWidget(self.load)
-
+        self.stacked.addWidget(self.game)
         self.layout = QtWidgets.QVBoxLayout()
         self.layout.addWidget(self.stacked)
         self.layout.setContentsMargins(0, 0, 0, 0)
@@ -23,6 +26,24 @@ class mainWindow(QtWidgets.QWidget):
 
         self.load.content.story_select_button.clicked.connect(self.select_content)
         self.load.output.story_select_button.clicked.connect(self.select_output)
+
+    def preload(self):
+        '''
+        Pre loads the gameplay window with whatever the first item in the load
+        window will be. Workaround for a graphics inconsistency if game window
+        is not preloaded.
+        '''
+        contentpath = list(self.load.content.content_list.contents.items())[0][1]
+        print(contentpath)
+        self.game = gameplayWidget(contentpath)
+
+    def setup_gameplay(self, input_path):
+        self.game = gameplayWidget(input_path)
+        self.stacked.addWidget(self.game)
+        self.stacked.setCurrentWidget(self.game)
+
+        self.game.cancel_button.clicked.connect(self.cancel)
+        self.game.generate_button.clicked.connect(self.generate_output)
 
     @QtCore.Slot()
     def select_content(self):
@@ -36,10 +57,31 @@ class mainWindow(QtWidgets.QWidget):
         if input_path == "" or input == "Error":
             print("Please select a list item.")
         else:
-            self.game = gameplayWidget(input_path)
-            self.stacked.addWidget(self.game)
-            self.stacked.setCurrentWidget(self.game)
+            self.setup_gameplay(input_path)
             print(f"Story Select: {input_path}")
+
+    @QtCore.Slot()
+    def cancel(self):
+        self.stacked.setCurrentWidget(self.load)
+
+    @QtCore.Slot()
+    def generate_output(self):
+        # Retrieve content from form and update dictionary, generate and display
+        # the output, give option to save.
+        for i in range(self.game.form_layout.rowCount()):
+            self.game.content['values'][self.game.edit_list[i][0].text()] = self.game.edit_list[i][1].text()
+        generated = generate(self.game.content)
+        output_display = outputDisplay(generated)
+        ret = output_display.exec_()
+        if ret == QtWidgets.QMessageBox.Save:
+            # TODO: call save function with generated dict
+            print("Save clicked")
+        elif ret == QtWidgets.QMessageBox.AcceptRole:
+            self.cancel()
+            print("Return clicked")
+        else:
+            # Error throw?
+            print("Something else clicked (?????)")
 
 
 def open_window():
