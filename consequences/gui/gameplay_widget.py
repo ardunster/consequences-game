@@ -1,7 +1,6 @@
 from PySide6 import QtCore, QtWidgets
 
-from consequences.common.files_load import content_load
-from consequences.gui.output_display_widget import outputDisplay
+from consequences.common.files import content_load
 
 
 class gameplayWidget(QtWidgets.QWidget):
@@ -12,6 +11,9 @@ class gameplayWidget(QtWidgets.QWidget):
         self.content = content_load(content_filepath)
         self.title = QtWidgets.QLabel(self.content['title'])
 
+        # Add line for Made By:
+        self.content['values']["Made by:"] = "Enter name(s)"
+
         # Lay out the form
         self.edit_list = []
         self.form_layout = QtWidgets.QFormLayout()
@@ -20,7 +22,6 @@ class gameplayWidget(QtWidgets.QWidget):
             line_edit_widget = QtWidgets.QLineEdit(v)
             self.form_layout.addRow(label_widget, line_edit_widget)
             self.edit_list.append((label_widget, line_edit_widget))
-        self.edit_list.append((QtWidgets.QLabel("Made by:"), QtWidgets.QLineEdit("")))
 
         # Lay out the buttons
         self.cancel_button = QtWidgets.QPushButton("&Cancel")

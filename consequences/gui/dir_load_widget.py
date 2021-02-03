@@ -1,7 +1,6 @@
 from PySide6 import QtCore, QtWidgets
 
-from consequences.common.files_load import directory_load
-from consequences.gui.gameplay_widget import gameplayWidget
+from consequences.common.files import directory_load
 
 
 class dirLoadWidget(QtWidgets.QWidget):
