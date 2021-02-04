@@ -29,8 +29,9 @@ other characters, and it can't start with a number!). Make sure each one is
 different: use 1, 2, etc if you have, for example, more than one noun (noun1,
 noun2...). In the position in the story where you want the word to appear, place
 the variable name in curly brackets {noun1}, making sure to add spaces or
-punctuation around the brackets as if it were a complete word. Then, add the
-variable name to...
+punctuation around the brackets as if it were a complete word. (Note: keep in
+mind you can't use quotes! If you need to use quotes, use a single quote `'`
+instead.) Then, add the variable name to...
 
 ## Values
 

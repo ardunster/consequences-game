@@ -2,7 +2,7 @@ import sys
 from PySide6 import QtWidgets, QtCore
 
 from consequences.common.generate import generate
-from consequences.common.files import output_save, output_load
+from consequences.common.files import output_save, output_load, directory_load
 from consequences.gui.dir_load_widget import loadWindow
 from consequences.gui.gameplay_widget import gameplayWidget
 from consequences.gui.output_display_widget import outputDisplay
@@ -91,6 +91,12 @@ class mainWindow(QtWidgets.QWidget):
         if ret == QtWidgets.QMessageBox.Save:
             print("Saving...")
             output_save(generated)
+            self.load.output.content_list.contents = directory_load(
+                self.load.output.directory
+            )
+            # TODO: Figure out what's missing to make this actually reload the
+            # content list after safing a new file.
+            # TODO: make this not automatically close the message box?
         elif ret == QtWidgets.QMessageBox.AcceptRole:
             self.cancel()
         else:

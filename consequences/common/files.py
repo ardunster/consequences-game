@@ -33,6 +33,9 @@ def output_save(generated_dictionary):
     """
     output_directory = pathlib.Path.cwd() / "consequences" / "output"
 
+    if not output_directory.exists():
+        output_directory.mkdir()
+
     # Remove spaces and invalid file path characters, convert to lower case
     # for filename consistency
     invalid_chars = '<>:"\\/|?* '
